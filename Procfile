@@ -1,2 +1,2 @@
-web: gunicorn src/config.wsgi
-bot: python src/manage.py bot
+web: gunicorn config.wsgi
+bot: python manage.py bot
