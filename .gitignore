@@ -132,7 +132,5 @@ dmypy.json
 .idea
 
 # Project
-logs/
-static/
 
 .gitignore
