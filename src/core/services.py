@@ -2,8 +2,7 @@ import requests
 
 from django.conf import settings
 
-from bot.helpers import log_catcher
-
+from bot.helpers.log_catcher import log_catcher
 
 @log_catcher
 def make_request_get_clicks(from_date: str,

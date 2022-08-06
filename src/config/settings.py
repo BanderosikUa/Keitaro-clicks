@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,6 +55,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+BASE_DIR.joinpath('logs').mkdir(parents=True, exist_ok=True)
+BASE_DIR.joinpath('logs/info.log').touch(exist_ok=True)
 
 LOGGING = {
     'version': 1,
