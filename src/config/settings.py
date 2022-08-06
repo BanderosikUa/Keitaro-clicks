@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,7 +76,7 @@ LOGGING = {
         "file": {
             'class': "logging.FileHandler",
             'formatter': 'my_formatter',
-            'filename': BASE_DIR.joinpath('logs').mkdir(parents=True, exist_ok=True) / 'info.log'
+            'filename': BASE_DIR.joinpath('logs/info.log')
         }
     },
 
@@ -158,6 +159,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR.joinpath('static'),
 ]
+STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # STATIC_ROOT = BASE_DIR.joinpath('static')
 
 LOGIN_REDIRECT_URL = 'main'
