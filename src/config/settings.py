@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'bot'
+    'bot',
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -74,7 +75,7 @@ LOGGING = {
         "file": {
             'class': "logging.FileHandler",
             'formatter': 'my_formatter',
-            'filename': BASE_DIR.joinpath('logs') / 'info.log'
+            'filename': BASE_DIR.joinpath('logs').mkdir(parents=True, exist_ok=True) / 'info.log'
         }
     },
 
@@ -154,7 +155,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR.joinpath('static')
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath('static'),
+]
+# STATIC_ROOT = BASE_DIR.joinpath('static')
+
+LOGIN_REDIRECT_URL = 'main'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -165,3 +171,4 @@ KEITARO_TOKEN = os.getenv('KEITARO_TOKEN')
 KEITARO_IP = os.getenv('KEITARO_IP')
 
 TG_TOKEN = os.getenv('TG_TOKEN')
+

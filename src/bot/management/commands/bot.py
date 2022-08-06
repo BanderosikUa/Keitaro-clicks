@@ -1,17 +1,19 @@
 import json
+import sqlite3
 
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import Text
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from django.core.management import BaseCommand
 from django.conf import settings
 from django.contrib.auth.models import User
 
 from asgiref.sync import sync_to_async
 
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Text
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram import Bot, Dispatcher, executor, types
+from channels.db import database_sync_to_async
 
 from ...helpers.log_catcher import log_catcher
 
@@ -38,14 +40,17 @@ async def register_users(message: types.Message, state: FSMContext):
         for key in dict_response:
             user_id = dict_response[key]
             if user_id:
-                await sync_to_async(User.objects.get_or_create)\
-                    (username=key, password=user_id)
+                await sync_to_async(User.objects.create_user)\
+                    (username=key, password=str(user_id))
             else:
                 await message.reply(f"'{key}' has not user_id")
         await state.finish()
         await message.reply('Done!',
                             reply_markup=ReplyKeyboardRemove())
+    except sqlite3.IntegrityError:
+        await message.reply('User already exists')
     except Exception as e:
+        print(e)
         await state.finish()
         await message.reply('Something went wrong! Check your message',
                             reply_markup=ReplyKeyboardRemove())

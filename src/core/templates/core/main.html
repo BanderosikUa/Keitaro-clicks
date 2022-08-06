@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block scripts %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="{% static 'js/main_script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="card box-shadow m-2 form-wrap">
+            <div class="card-header text-center">
+                <h3>Amount of clicks</h3>
+            </div>
+            <form id="form" class="p-3" action='' method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                    <div class="form-group">
+                        <label for="from_date" class="col-form-label">From Date</label>
+                            <div class="input-group date" id="datepicker">
+                                <input type="text" class="form-control" value="{{ from_date }}" name="from_date">
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-white">
+                                        <i class="fa fa-calendar" style="height: 25px"></i>
+                                    </span>
+                                </span>
+                            </div>
+                    </div>
+                    </div>
+                    <div class="col">
+                    <div class="form-group">
+                        <label for="to_date" class="col-form-label">To Date</label>
+                            <div class="input-group date" id="datepicker2">
+                                <input type="text" class="form-control" value="{{ to_date }}" name="to_date">
+                                <span class="input-group-append">
+                                    <span class="input-group-text bg-white">
+                                        <i class="fa fa-calendar" style="height: 25px"></i>
+                                    </span>
+                                </span>
+                            </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="clicks">Clicks</label>
+                    <input class="form-control" id='clicks' type="text" placeholder="Result" readonly value="{{ clicks }}">
+                </div>
+                <hr>
+                <div class="submit-btn mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
