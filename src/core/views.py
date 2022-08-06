@@ -34,7 +34,7 @@ class MainView(TemplateView):
         context = super().get_context_data(*args, **kwargs)
 
         user = self.request.user.username
-        date_today = datetime.date.today().strftime('%Y-%m-%d')
+        date_today = datetime.date.today().strftime('%m/%d/%Y')
         context['from_date'] = date_today
 
         clicks = make_request_get_clicks(from_date=date_today,
