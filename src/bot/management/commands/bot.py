@@ -45,7 +45,9 @@ async def register_users(message: types.Message, state: FSMContext):
             else:
                 await message.reply(f"'{key}' has not user_id")
         await state.finish()
-        await message.reply('Done!',
+        success_message = f"Done! Site url:" \
+                          f"{settings.ALLOWED_HOSTS[0] + '/login'}"
+        await message.reply(success_message,
                             reply_markup=ReplyKeyboardRemove())
     except sqlite3.IntegrityError:
         await message.reply('User already exists')
